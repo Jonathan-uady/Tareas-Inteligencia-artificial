@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 20mm 15mm 20mm 15mm;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #2c3e50;
+    line-height: 1.5;
+    font-size: 10pt;
+    background-color: #ffffff;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 0;
+    margin: 0 auto;
+    background: white;
+    position: relative;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .page:last-child {
+    page-break-after: avoid;
+  }
+  
+  /* Header Masthead */
+  .header-masthead {
+    border-bottom: 2px solid #1a365d;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+  .header-masthead h1 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #1a365d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .metadata-grid {
+    display: flex;
+    gap: 20px;
+    font-size: 9.5pt;
+    color: #4a5568;
+    background: #f7fafc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 4px solid #3182ce;
+  }
+  .metadata-item strong {
+    color: #2d3748;
+  }
+
+  /* Section Styling */
+  .section-title {
+    font-size: 12pt;
+    font-weight: 700;
+    color: #1a365d;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+    margin-top: 16px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  /* Subgraph Panel */
+  .subgraph-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .subgraph-route {
+    font-size: 9pt;
+    margin-bottom: 8px;
+    font-family: sans-serif;
+    background: #fff;
+    padding: 8px 10px;
+    border: 1px solid #edf2f7;
+    border-radius: 4px;
+  }
+  .subgraph-route span.label {
+    font-weight: bold;
+    color: #2b6cb0;
+  }
+
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 9pt;
+  }
+  th, td {
+    border: 1px solid #cbd5e0;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: #2b6cb0;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 8.5pt;
+    letter-spacing: 0.5px;
+  }
+  tr:nth-child(even) {
+    background-color: #f7fafc;
+  }
+
+  /* Report & Analysis Paragraphs */
+  .report-text {
+    text-align: justify;
+    margin-bottom: 12px;
+    font-size: 9.5pt;
+    color: #2d3748;
+  }
+  .report-question {
+    font-weight: 700;
+    color: #1a365d;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-size: 10pt;
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8pt;
+    color: #718096;
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <div class="header-masthead">
+      <h1>Comparar Greedy y A* en el mapa de Rumania</h1>
+      <div class="metadata-grid">
+        <div class="metadata-item"><strong>Origen:</strong> Timisoara</div>
+        <div class="metadata-item"><strong>Destino:</strong> Bucharest</div>
+        <div class="metadata-item"><strong>Heurística:</strong> Distancia en línea recta (AIMA table)</div>
+      </div>
+    </div>
+
+    <div class="section-title">1. Diagrama del Subgrafo y Conexiones Clave</div>
+    <div class="subgraph-box">
+      <div class="subgraph-route">
+        <span class="label">Ruta A*:</span> Timisoara (h=329) → Arad (118 km, h=366) → Sibiu (140 km, h=253) → Rimnicu Vilcea (80 km, h=193) → Pitesti (97 km, h=100) → Bucharest (101 km, h=0). <strong>Costo total: 536 km.</strong>
+      </div>
+      <div class="subgraph-route" style="margin-bottom: 0;">
+        <span class="label">Ruta Greedy:</span> Timisoara (h=329) → Lugoj (111 km, h=244) → Mehadia (70 km, h=241) → Drobeta (75 km, h=242) → Craiova (120 km, h=160) → Pitesti (138 km, h=100) → Bucharest (101 km, h=615). <strong>Costo total: 615 km.</strong>
+      </div>
+    </div>
+
+    <div class="section-title">2. Tabla Comparativa de Algoritmos</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Algoritmo</th>
+          <th>Status</th>
+          <th>Path</th>
+          <th>Depth</th>
+          <th>Cost (km)</th>
+          <th>Expanded</th>
+          <th>Heurística Usada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Greedy</strong></td>
+          <td>success</td>
+          <td>Timisoara → Lugoj → Mehadia → Drobeta → Craiova → Pitesti → Bucharest</td>
+          <td>6</td>
+          <td>615</td>
+          <td>6</td>
+          <td>Distancia en línea recta (AIMA)</td>
+        </tr>
+        <tr>
+          <td><strong>A*</strong></td>
+          <td>success</td>
+          <td>Timisoara → Arad → Sibiu → Rimnicu Vilcea → Pitesti → Bucharest</td>
+          <td>5</td>
+          <td>536</td>
+          <td>9</td>
+          <td>Distancia en línea recta (AIMA)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span>Práctica de Búsqueda Informada — Mapa de Rumania (AIMA Cap. 3)</span>
+    <span>Página 1 de 2</span>
+  </div>
+</div>
+
+<div class="page">
+  <div>
+    <div class="section-title" style="margin-top: 0;">3. Reporte y Análisis Técnico</div>
+
+    <div class="report-question">¿A* encontró el camino de menos km? ¿Greedy coincidió o se desvió?</div>
+    <div class="report-text">
+      Sí, A* encontró la ruta óptima de menor costo real con un total de 536 km. Por el contrario, Greedy se desvió significativamente de esta solución óptima, devolviendo un camino alternativo mucho más costoso que asciende a 615 km en distancia total de recorrido.
+    </div>
+
+    <div class="report-question">¿Por qué Greedy puede devolver un camino más caro aunque h sea admisible?</div>
+    <div class="report-text">
+      El algoritmo Greedy selecciona el siguiente nodo a expandir basándose exclusivamente en el valor de la heurística h(n), ignorando por completo el costo acumulado de las carreteras ya recorridas (g(n)). Su toma de decisiones es puramente miópica y local, guiándose únicamente por el nodo que aparente estar más cerca de la meta en línea recta. Esto puede llevarlo a elegir desvíos geográficos que resultan muy ineficientes a largo plazo en términos de distancia real sobre el terreno.
+    </div>
+
+    <div class="report-question">En el camino de A*, ¿f tiende a no disminuir a lo largo de la ruta? Relaciónalo con que h sea consistente.</div>
+    <div class="report-text">
+      A lo largo del camino óptimo encontrado por A* desde Timisoara hasta Bucharest, los valores de f(n) evaluados fueron monómonamente crecientes: comenzaron en 329 (Timisoara), subieron a 484 (Arad), 511 (Sibiu), 531 (Rimnicu Vilcea), 535 (Pitesti) y finalizaron en 536 (Bucharest). Esta tendencia estricta a no disminuir es una consecuencia matemática directa de utilizar una heurística consistente (monótona). Una heurística consistente asegura que la estimación del costo restante cumpla con la desigualdad triangular, de modo que el costo total estimado f(n) = g(n) + h(n) nunca decrezca a lo largo de cualquier ruta óptima hacia el objetivo.
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Práctica de Búsqueda Informada — Mapa de Rumania (AIMA Cap. 3)</span>
+    <span>Página 2 de 2</span>
+  </div>
+</div>
+</body>
+</html>
